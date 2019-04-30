@@ -5,8 +5,20 @@
  */
 package model;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.en.PorterStemFilter;
+import org.apache.lucene.analysis.id.IndonesianAnalyzer;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.util.Version;
+import org.apache.lucene.analysis.*;
+import org.apache.lucene.analysis.snowball.*;
+import org.apache.lucene.analysis.id.*;
 
 /**
  *
@@ -77,5 +89,31 @@ public class Document implements Comparable<Document>{
     @Override
     public int compareTo(Document o) {
         return Integer.compare(this.id, o.id);
+    }
+    public void IndonesiaStemming(){
+        String text = content;
+        Version matchVersion = Version.LUCENE_7_7_0;
+        StringReader tReader = new StringReader(text);
+        IndonesianAnalyzer analyzer = new IndonesianAnalyzer();
+        TokenStream tStream = analyzer.tokenStream("contents",tReader);
+        //buat token
+        TokenStream tokenStream = analyzer.tokenStream(
+                "myField",
+                new StringReader(text.trim()));
+        //stemming
+        tokenStream = new PorterStemFilter(tokenStream);
+        //buat string baru
+        StringBuilder sb = new StringBuilder();
+        CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
+        try{
+            tokenStream.reset();
+            while(tokenStream.incrementToken()){
+                String term = charTermAttribute.toString();
+                sb.append(term + " ");
+            }
+        } catch (IOException ex) {
+            System.out.println("Exception : " + ex);
+        }
+        content = sb.toString();
     }
 }
