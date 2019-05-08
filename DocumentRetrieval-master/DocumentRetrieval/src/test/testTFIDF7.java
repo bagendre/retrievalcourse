@@ -45,19 +45,19 @@ public class testTFIDF7 {
         System.out.println("");
         // number of document
         String tempString = "shipment";
-        int result2 = index.getDocFreq(tempString);
+        int result2 = index.getDocumentFrequency(tempString);
         System.out.println("Number of Doc with " + tempString + " is " + result2);
 
         // idf
         String tempString1 = "shipment";
-        double result3 = index.getInverseDocFreq(tempString1);
+        double result3 = index.getInverseDocumentFrequency(tempString1);
         System.out.println("IDF of " + tempString1 + " is " + result3);
 
         // tf
         // idf
         String tempString2 = "fire";
         int idDoc = 2;
-        int result4 = index.getTermFreq(tempString2, idDoc);
+        int result4 = index.getTermFrequency(tempString2, idDoc);
         System.out.println("TF of " + tempString2 + " in idDoc = " + idDoc + " is " + result4);
         System.out.println("");
         // make arraylist of TFIDF

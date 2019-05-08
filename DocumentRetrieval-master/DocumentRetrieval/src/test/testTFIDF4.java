@@ -45,7 +45,7 @@ public class testTFIDF4 {
         System.out.println("====================================");
         // number of document
         String tempString = "a";
-        int result2 = index.getDocFreq(tempString);
+        int result2 = index.getDocumentFrequency(tempString);
         System.out.println("Number of Doc with " + tempString + " is " + result2);
     }
 }
